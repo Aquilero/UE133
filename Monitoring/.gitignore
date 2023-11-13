@@ -1,0 +1,13 @@
+.vscode/
+*.html
+alertmanager.env
+
+node_modules/
+
+# Local .terraform directories
+**/.terraform/*
+.terraform.*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*

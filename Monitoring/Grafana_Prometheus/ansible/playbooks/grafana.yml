@@ -1,6 +1,0 @@
----
-- name: Grafana
-  hosts: grafana
-  roles: 
-  - grafana
-  become: true

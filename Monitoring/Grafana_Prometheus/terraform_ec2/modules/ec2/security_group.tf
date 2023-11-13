@@ -21,7 +21,7 @@ resource "aws_security_group" "sg" {
   }
 
   ingress {
-    description = "HTTP"
+    description = "prometheus"
     from_port   = 9090
     to_port     = 9090
     protocol    = "tcp"
@@ -29,17 +29,24 @@ resource "aws_security_group" "sg" {
   }
 
   ingress {
-    description = "HTTP"
+    description = "node_exporter"
     from_port   = 9100
     to_port     = 9100
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    description = "alertmanager"
+    from_port   = 9093
+    to_port     = 9093
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
     description = "Grafana"
-    from_port   = 3333
-    to_port     = 3333
+    from_port   = 3000
+    to_port     = 3000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }

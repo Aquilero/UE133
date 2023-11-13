@@ -26,17 +26,30 @@
     dest: "/usr/local/bin/prometheus/"
     remote_src: yes
 
-- name: create config file
+- name: copy config file
   ansible.builtin.copy:
-    dest: "/usr/local/bin/prometheus/exporter.yml"
-    content: |
-      global:
-        scrape_interval: 15s
+    src: files/prometheus.yml
+    dest: "/usr/local/bin/prometheus/prometheus.yml"
 
-      scrape_configs:
-        - job_name: node
-          static_configs:
-              - targets: ['localhost:9100','{{ hostvars['exporter']['ansible_host'] }}:9100'] 
+- name: copy rules file
+  ansible.builtin.copy:
+    src: files/first_rules.yml
+    dest: "/usr/local/bin/prometheus/first_rules.yml"
+
+- name: copy rules file
+  ansible.builtin.copy:
+    src: files/second_rules.yml
+    dest: "/usr/local/bin/prometheus/second_rules.yml"
+
+- name: copy env file
+  ansible.builtin.copy:
+    src: files/alertmanager.env
+    dest: "/usr/local/bin/alertmanager/alertmanager.env"
+
+- name: copy alertmanager file
+  ansible.builtin.copy:
+    src: files/alertmanager.yml
+    dest: "/usr/local/bin/alertmanager/alertmanager.yml"
 
 - name: create service file
   copy:
@@ -48,13 +61,15 @@
 
       [Service]
       Type=simple
-      ExecStart=/usr/local/bin/prometheus/prometheus --config.file=/usr/local/bin/prometheus/exporter.yml
+      ExecStart=/usr/local/bin/prometheus/prometheus --config.file=/usr/local/bin/prometheus/prometheus.yml
+      EnvironmentFile=/usr/local/bin/alertmanager/alertmanager.env
 
       [Install]
       WantedBy=multi-user.target
 
-- name: service always started
+- name: service always restarted
   systemd:
     name: prometheus
-    state: started
+    state: restarted
     enabled: true
+    daemon_reload: yes
