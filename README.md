@@ -1,7 +1,7 @@
-# Genutze Repo-Quellen: 
-# MTeeeee: https://github.com/MTeeeee/teaching.git 
-# & 
-# martindubb: https://github.com/martindubb/monitoring-automation/tree/main/terraform_ec2
+Genutze Repo-Quellen: 
+MTeeeee: https://github.com/MTeeeee/teaching.git 
+& 
+martindubb: https://github.com/martindubb/monitoring-automation/tree/main/terraform_ec2
 
 # Freitag 10.11.2023
 
